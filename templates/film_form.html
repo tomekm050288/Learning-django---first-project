@@ -1,21 +1,28 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'main.html' %}
+{% load bootstrap %}
+{% block title %} Film form {% endblock %}
 
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit">Add movie</button>
+{% block page %}
+    <div class="card" style="width: 32rem;">
+      <div class="card-body">
+          {% if nowy %}
+            <h5 class="card-title">New Movie</h5>
+          {% else %}
+            <h5 class="card-title">Edit Movie</h5>
+          {% endif %}
 
-    </form>
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|bootstrap }}
+              {% if nowy %}
+                 <button type="submit" class="btn btn-primary">New Movie</button>
+              {% else %}
+                <button type="submit" class="btn btn-primary">Edit Movie</button>
+              {% endif %}
+          </form>
+      </div>
+    </div>
+
     <a href="{% url 'all_movies' %}">Undo</a>
 
-</body>
-</html>
+{% endblock %}
